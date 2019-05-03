@@ -1,21 +1,21 @@
-Overview
+概览
 ========
-The Shaders Mod makes use of a deferred rendering pipeline. 
+Optifine模组的光影模块使用的是延迟渲染模式
 The gbuffer shaders come first in the pipeline. They render data to textures that will be sent to the composite shaders. 
-Optional deferred shaders can be added between terrain and water rendering.
-The composite shaders then render to textures that will be sent to the final shader. 
-The final shader renders directly to the screen.
+你可以在实体着色器与半透明物体着色器之间添加可选的延迟渲染着色器"deferred[X]"
+复合着色器"composite[X]"的渲染结果将输入到材质缓冲然后发送给输出着色器"final"处理
+输出着色器"final"的渲染结果将直接输出到玩家屏幕.
 
-Shader Files
+光影文件
 ============
-All shader files are placed in the folder "shaders" of the shader pack.
+光影包的所有文件都在文件夹"shaders"内.
 The shader source files use the name of the program in which they are to be used with extension depending on their type.
 
-Extension  Type                 
+文件格式类型         
 ==========================
-.vsh       Vertex shader     
-.gsh       Geometry shader   
-.fsh       Fragment shader   
+.vsh       顶点着色器     
+.gsh       几何着色器
+.fsh       片元着色器
 
 Geometry shaders need either OpenGL 3.2 with layout qualifiers or the extension GL_ARB_geometry_shader4 with configuration "maxVerticesOut".
 
@@ -60,7 +60,7 @@ The current shaderpack can be reloaded by pressing "F3+R" or using the command "
 
 Shader Programs
 ===============
-Name                         Render                                When not defined use
+标识名                         渲染对象                                When not defined use
 ========================================================================================
 <none>                       gui, menus                            <none>
 --- Shadow map ---
@@ -135,14 +135,14 @@ uniform int worldTime;                          <ticks> = worldTicks % 24000
 uniform int worldDay;                           <days> = worldTicks / 24000
 uniform int moonPhase;                          0-7
 uniform int frameCounter;                       Frame index (0 to 720719, then resets to 0)
-uniform float frameTime;                        last frame time, seconds
+uniform float frameTime;                        上一帧渲染所用时间,单位:秒
 uniform float frameTimeCounter;                 run time, seconds (resets to 0 after 3600s)
 uniform float sunAngle;                         0.0-1.0
 uniform float shadowAngle;                      0.0-1.0
 uniform float rainStrength;                     0.0-1.0
 uniform float aspectRatio;                      viewWidth / viewHeight
-uniform float viewWidth;                        viewWidth
-uniform float viewHeight;                       viewHeight
+uniform float viewWidth;                        (游戏)画面宽度
+uniform float viewHeight;                       (游戏)画面高度
 uniform float near;                             near viewing plane distance
 uniform float far;                              far viewing plane distance
 uniform vec3 sunPosition;                       sun position in eye space
@@ -165,8 +165,8 @@ uniform float wetness;                          rainStrength smoothed with wetne
 uniform float eyeAltitude;                      view entity Y position
 uniform ivec2 eyeBrightness;                    x = block brightness, y = sky brightness, light 0-15 = brightness 0-240 
 uniform ivec2 eyeBrightnessSmooth;              eyeBrightness smoothed with eyeBrightnessHalflife
-uniform ivec2 terrainTextureSize;               not used
-uniform int terrainIconSize;                    not used
+uniform ivec2 terrainTextureSize;               not used(无效的全局量?)
+uniform int terrainIconSize;                    not used(无效的全局量?)
 uniform int isEyeInWater;                       1 = camera is in water, 2 = camera is in lava
 uniform float nightVision;                      night vision (0.0-1.0)
 uniform float blindness;                        blindness (0.0-1.0)
@@ -175,7 +175,7 @@ uniform int hideGUI;                            GUI is hidden
 uniform float centerDepthSmooth;                centerDepth smoothed with centerDepthSmoothHalflife
 uniform ivec2 atlasSize;                        texture atlas size (only set when the atlas texture is bound)
 uniform vec4 entityColor;                       entity color multiplier (entity hurt, creeper flashing when exploding)
-uniform int entityId;                           entity ID
+uniform int entityId;                           实体数字ID
 uniform int blockEntityId;                      block entity ID (block ID for the tile entity, only for blocks specified in "block.properties")
 uniform ivec4 blendFunc;                        blend function (srcRGB, dstRGB, srcAlpha, dstAlpha)
 
