@@ -56,24 +56,24 @@ The following preprocessor directives are currently recognized:
   #else
   #endif
 
-The current shaderpack can be reloaded by pressing "F3+R" or using the command "/reloadShaders". 
+正在使用的着色器可以通过按下 "F3+R" 或者输入指令 "/reloadShaders"来重新加载. 
 
 Shader Programs
 ===============
 标识名                         渲染对象                                When not defined use
 ========================================================================================
-<none>                       gui, menus                            <none>
+<none>                       界面, 菜单                            <none>
 --- Shadow map ---
-shadow                       everything in shadow pass             <none>  
+shadow                       阴影空间内的所有实体                   <none>  
 shadow_solid                 <not used>                            shadow
 shadow_cutout                <not used>                            shadow
 --- GBuffers ---
 gbuffers_basic               leash, block selection box            <none>
-gbuffers_textured            particles                             gbuffers_basic
+gbuffers_textured            粒子                                   gbuffers_basic
 gbuffers_textured_lit        lit_particles, world border           gbuffers_textured
-gbuffers_skybasic            sky, horizon, stars, void             gbuffers_basic
-gbuffers_skytextured         sun, moon                             gbuffers_textured
-gbuffers_clouds              clouds                                gbuffers_textured
+gbuffers_skybasic            天空, horizon, 星空图, void            gbuffers_basic
+gbuffers_skytextured         太阳, 月亮                             gbuffers_textured
+gbuffers_clouds              云                                    gbuffers_textured
 gbuffers_terrain             solid, cutout, cutout_mip             gbuffers_textured_lit
 gbuffers_terrain_solid       <not used>                            gbuffers_terrain
 gbuffers_terrain_cutout_mip  <not used>                            gbuffers_terrain
@@ -82,11 +82,11 @@ gbuffers_damagedblock        damaged_blocks                        gbuffers_terr
 gbuffers_block               block_entities                        gbuffers_terrain
 gbuffers_beaconbeam          beacon beam                           gbuffers_textured
 gbuffers_item                <not used>                            gbuffers_textured_lit
-gbuffers_entities            entities                              gbuffers_textured_lit
+gbuffers_entities            实体,生物                              gbuffers_textured_lit
 gbuffers_armor_glint         glint on armor and handheld items     gbuffers_textured
-gbuffers_spidereyes          eyes of spider, enderman and dragon   gbuffers_textured
+gbuffers_spidereyes          蜘蛛,末影人以及末影人的眼睛             gbuffers_textured
 gbuffers_hand                hand and opaque handheld objects      gbuffers_textured_lit
-gbuffers_weather             rain, snow                            gbuffers_textured_lit
+gbuffers_weather             雨, 雪                                gbuffers_textured_lit
 --- Deferred ---
 deferred_pre                 <virtual> flip ping-pong buffers      <none>
 deferred                     <deferred>                            <none>
@@ -94,8 +94,8 @@ deferred1                    <deferred>                            <none>
 ...
 deferred15                   <deferred>                            <none>
 --- GBuffers translucent ---
-gbuffers_water               translucent                           gbuffers_terrain
-gbuffers_hand_water          translucent handheld objects          gbuffers_hand
+gbuffers_water               半透明物体                             gbuffers_terrain
+gbuffers_hand_water          手持的半透明物体                        gbuffers_hand
 --- Composite ---
 composite_pre                <virtual> flip ping-pong buffers      <none>
 composite                    <composite>                           <none>
@@ -123,9 +123,9 @@ Uniforms
 ==========
 Source                                          Value                                                    
 =====================================================================================================================================================================
-uniform int heldItemId;                         held item ID (main hand), used only for items defined in "item.properties"
+uniform int heldItemId;                         手持物品的数字ID (主手臂), 仅对已在 "item.properties"中定义的物体生效
 uniform int heldBlockLightValue;                held item light value (main hand)
-uniform int heldItemId2;                        held item ID (off hand), used only for items defined in "item.properties"
+uniform int heldItemId2;                        手持物品的数字ID (副手臂), 仅对已在 "item.properties"中定义的物体生效
 uniform int heldBlockLightValue2;               held item light value (off hand)
 uniform int fogMode;                            GL_LINEAR, GL_EXP or GL_EXP2
 uniform float fogDensity;                       0.0-1.0
@@ -136,11 +136,11 @@ uniform int worldDay;                           <days> = worldTicks / 24000
 uniform int moonPhase;                          0-7
 uniform int frameCounter;                       Frame index (0 to 720719, then resets to 0)
 uniform float frameTime;                        上一帧渲染所用时间,单位:秒
-uniform float frameTimeCounter;                 run time, seconds (resets to 0 after 3600s)
+uniform float frameTimeCounter;                 游戏的运行时间,单位:秒 (当游戏的运行时间计数到3600秒后，计数器将初始化为0秒)
 uniform float sunAngle;                         0.0-1.0
 uniform float shadowAngle;                      0.0-1.0
 uniform float rainStrength;                     0.0-1.0
-uniform float aspectRatio;                      viewWidth / viewHeight
+uniform float aspectRatio;                      viewWidth / viewHeight(即 画面宽度/画面高度)
 uniform float viewWidth;                        (游戏)画面宽度
 uniform float viewHeight;                       (游戏)画面高度
 uniform float near;                             near viewing plane distance
