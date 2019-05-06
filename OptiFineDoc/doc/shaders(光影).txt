@@ -19,10 +19,10 @@ The shader source files use the name of the program in which they are to be used
 
 Geometry shaders need either OpenGL 3.2 with layout qualifiers or the extension GL_ARB_geometry_shader4 with configuration "maxVerticesOut".
 
-Color Attachments
+画面缓冲
 =================
-The data is passed from shader to shader using color attachments. 
-There are at least 4 for all machines. For machines that can support it, there are 8. 
+着色器与着色器之间的数据传输是通过画面缓冲来实现的.
+所有硬件平台至少都能提供4个画面缓冲区.而一些硬件性能足够支持的平台会有8个.
 In the deferred, composite and final shaders, these are referenced by the gcolor, gdepth, gnormal, composite, gaux1, gaux2, gaux3 and gaux4 uniforms
 (colortex0 to colortex7 can be used instead of gcolor, gdepth etc.)
 Despite the naming, all of these color attachments are the same and can be used for any purpose with the exception of the first two. 
@@ -115,18 +115,18 @@ Attributes
 ==========
 Source                                          Value                                             Comment
 =====================================================================================================================================================================
-attribute vec3 mc_Entity;                       xy = blockId, renderType                          "blockId" is used only for blocks specified in "block.properties"      
+attribute vec3 mc_Entity;                       xy = 实体的数字ID, 实体渲染类型                     "实体的数字ID" is used only for blocks specified in "block.properties"      
 attribute vec2 mc_midTexCoord;                  st = midTexU, midTexV                             Sprite middle UV coordinates                
-attribute vec4 at_tangent;                      xyz = tangent vector, w = handedness
+attribute vec4 at_tangent;                      xyz = 切线向量, w = 惯用手[即用手习惯为左手还是右手]
 
 Uniforms
 ==========
 Source                                          Value                                                    
 =====================================================================================================================================================================
 uniform int heldItemId;                         手持物品的数字ID (主手臂), 仅对已在 "item.properties"中定义的物体生效
-uniform int heldBlockLightValue;                held item light value (main hand)
+uniform int heldBlockLightValue;                手持物体的光照度 (主手臂)
 uniform int heldItemId2;                        手持物品的数字ID (副手臂), 仅对已在 "item.properties"中定义的物体生效
-uniform int heldBlockLightValue2;               held item light value (off hand)
+uniform int heldBlockLightValue2;               手持物体的光照度 (副手臂)
 uniform int fogMode;                            GL_LINEAR, GL_EXP or GL_EXP2
 uniform float fogDensity;                       0.0-1.0
 uniform vec3 fogColor;                          r, g, b
@@ -140,17 +140,17 @@ uniform float frameTimeCounter;                 游戏的运行时间,单位:秒
 uniform float sunAngle;                         0.0-1.0
 uniform float shadowAngle;                      0.0-1.0
 uniform float rainStrength;                     0.0-1.0
-uniform float aspectRatio;                      viewWidth / viewHeight(即 画面宽度/画面高度)
+uniform float aspectRatio;                      viewWidth / viewHeight[即 画面宽度/画面高度]
 uniform float viewWidth;                        (游戏)画面宽度
 uniform float viewHeight;                       (游戏)画面高度
 uniform float near;                             near viewing plane distance
 uniform float far;                              far viewing plane distance
-uniform vec3 sunPosition;                       sun position in eye space
-uniform vec3 moonPosition;                      moon position in eye space
+uniform vec3 sunPosition;                       玩家视角中透视空间的太阳位置
+uniform vec3 moonPosition;                      玩家视角中透视空间的月亮位置
 uniform vec3 shadowLightPosition;               shadow light (sun or moon) position in eye space
 uniform vec3 upPosition;                        direction up
-uniform vec3 cameraPosition;                    camera position in world space
-uniform vec3 previousCameraPosition;            last frame cameraPosition
+uniform vec3 cameraPosition;                    世界空间中摄像机的位置
+uniform vec3 previousCameraPosition;            上一帧摄像机的在世界空间中的位置
 uniform mat4 gbufferModelView;                  modelview matrix after setting up the camera transformations
 uniform mat4 gbufferModelViewInverse;           inverse gbufferModelView
 uniform mat4 gbufferPreviousModelView;          last frame gbufferModelView
@@ -168,12 +168,12 @@ uniform ivec2 eyeBrightnessSmooth;              eyeBrightness smoothed with eyeB
 uniform ivec2 terrainTextureSize;               not used(无效的全局量?)
 uniform int terrainIconSize;                    not used(无效的全局量?)
 uniform int isEyeInWater;                       1 = camera is in water, 2 = camera is in lava
-uniform float nightVision;                      night vision (0.0-1.0)
-uniform float blindness;                        blindness (0.0-1.0)
-uniform float screenBrightness;                 screen brightness (0.0-1.0)
-uniform int hideGUI;                            GUI is hidden
+uniform float nightVision;                      夜视程度 (0.0-1.0)
+uniform float blindness;                        失明程度 (0.0-1.0)
+uniform float screenBrightness;                 游戏所设置的亮度 (0.0-1.0)
+uniform int hideGUI;                            GUI是否为隐藏状态
 uniform float centerDepthSmooth;                centerDepth smoothed with centerDepthSmoothHalflife
-uniform ivec2 atlasSize;                        texture atlas size (only set when the atlas texture is bound)
+uniform ivec2 atlasSize;                        总合并材质大小(分辨率) (only set when the atlas texture is bound)
 uniform vec4 entityColor;                       entity color multiplier (entity hurt, creeper flashing when exploding)
 uniform int entityId;                           实体数字ID
 uniform int blockEntityId;                      block entity ID (block ID for the tile entity, only for blocks specified in "block.properties")
