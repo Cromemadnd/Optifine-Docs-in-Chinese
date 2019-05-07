@@ -58,12 +58,12 @@ The following preprocessor directives are currently recognized:
 
 正在使用的着色器可以通过按下 "F3+R" 或者输入指令 "/reloadShaders"来重新加载. 
 
-Shader Programs
+着色器程序
 ===============
 标识名                         渲染对象                                When not defined use
 ========================================================================================
 <none>                       界面, 菜单                            <none>
---- Shadow map ---
+--- 阴影贴图缓冲 ---
 shadow                       阴影空间内的所有实体                   <none>  
 shadow_solid                 <not used>                            shadow
 shadow_cutout                <not used>                            shadow
@@ -102,7 +102,7 @@ composite                    <composite>                           <none>
 composite1                   <composite>                           <none>
 ...
 composite15                  <composite>                           <none>
---- Final ---
+--- 最终输出 ---
 final                        <final>                               <none>
 
 Remarks:
