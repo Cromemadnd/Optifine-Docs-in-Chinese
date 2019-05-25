@@ -739,7 +739,7 @@ of.options.CHAT_BACKGROUND.tooltip.2=  默认 - 固定字宽
 of.options.CHAT_BACKGROUND.tooltip.3=  紧凑 - 调整以适应行宽
 of.options.CHAT_BACKGROUND.tooltip.4=  关闭 - 隐藏
 
-of.options.CHAT_SHADOW=聊天阴影
-of.options.CHAT_SHADOW.tooltip.1=聊天阴影
+of.options.CHAT_SHADOW=聊天字体阴影
+of.options.CHAT_SHADOW.tooltip.1=聊天字体阴影
 of.options.CHAT_SHADOW.tooltip.2=  开启 - 使用字体阴影
 of.options.CHAT_SHADOW.tooltip.3=  关闭 - 无字体阴影
