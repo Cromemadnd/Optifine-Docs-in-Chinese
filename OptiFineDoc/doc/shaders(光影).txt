@@ -1,34 +1,37 @@
-概览
+简述
 ========
-Optifine模组的光影模块使用的是延迟渲染模式
-The gbuffer shaders come first in the pipeline. They render data to textures that will be sent to the composite shaders. 
-你可以在实体着色器与半透明物体着色器之间添加可选的延迟渲染着色器"deferred[X]"
+Optifine模组使用延迟渲染管线渲染
+管线中最先渲染的是gbuffer着色器. 它们会将渲染的数据储存到缓冲中,并发送到复合着色器中. 
+你可以在实体着色器与半透明物体着色器之间添加可选的延迟着色器"deferred[X]"
 复合着色器"composite[X]"的渲染结果将输入到材质缓冲然后发送给输出着色器"final"处理
 输出着色器"final"的渲染结果将直接输出到玩家屏幕.
 
+
+
 光影文件
 ============
-光影包的所有文件都在文件夹"shaders"内.
-The shader source files use the name of the program in which they are to be used with extension depending on their type.
+在光影包中,相关的文件都要放在文件夹"shaders"内.
+着色器的文件名及其文件拓展名格式将会决定其功能以及用途.
 
-文件格式类型         
+着色器文件格式类型         
 ==========================
 .vsh       顶点着色器     
 .gsh       几何着色器
 .fsh       片元着色器
 
-Geometry shaders need either OpenGL 3.2 with layout qualifiers or the extension GL_ARB_geometry_shader4 with configuration "maxVerticesOut".
+几何着色器需要具有布局限定符支持的OpenGL 3.2或者具有"maxVerticesOut"组态的拓展GL_ARB_geometry_shader4来支持.
+
+
 
 画面缓冲
 =================
-着色器与着色器之间的数据传输是通过画面缓冲来实现的.
-所有硬件平台至少都能提供4个画面缓冲区.而一些硬件性能足够支持的平台会有8个.
-In the deferred, composite and final shaders, these are referenced by the gcolor, gdepth, gnormal, composite, gaux1, gaux2, gaux3 and gaux4 uniforms
-(colortex0 to colortex7 can be used instead of gcolor, gdepth etc.)
-Despite the naming, all of these color attachments are the same and can be used for any purpose with the exception of the first two. 
-The first one, gcolor has its color cleared to the current fog color before rendering. 
-The second one, gdepth has its color cleared to solid white before rendering and uses a higher precision storage buffer suitable for storing depth values. 
-The rest have their color cleared to black with 0 alpha.
+着色器之间的数据传输是通过画面缓冲来完成的.
+所有硬件平台至少都能提供4个画面缓冲区.而一些可以支持硬件的平台会有8个(译者注:现今除部分集成显卡外,都能够支持到8个画面缓冲区).
+在延迟着色器、复合着色器以及输出着色器中,画面缓冲区使用gcolor、gdepth、gnormal、composite、gaux1、gaux2、gaux3和gaux4来标识(这些缓冲标识符还可以使用colortex0到colortex7来代替)
+虽然这些命名各不相同,但是除了前两个画面缓冲区以外,其它所有的画面缓冲区都一样可以用于任何用途.
+  第一个画面缓冲gcolor,在进入渲染之前会将画面重置为当前游戏的雾色.
+  第二个画面缓冲gdepth,在进入渲染之前会将画面重置为纯白色,并默认使用更高精度以适用于储存深度数据.
+  其余的画面缓冲在进入渲染之前都会统一地将画面重置为黑色(即0).
 
 Each color attachment uses 2 buffers (A and B) with logical names "main" and "alt", which can be used as ping-pong buffers.
 When the buffers are flipped the mapping between main/alt and A/B is reversed.
